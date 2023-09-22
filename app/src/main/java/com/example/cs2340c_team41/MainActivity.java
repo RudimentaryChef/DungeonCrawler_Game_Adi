@@ -19,6 +19,13 @@ public class MainActivity extends AppCompatActivity {
                 System.exit(0);
             }
         });
+        startApplicationBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Intent intent = new Intent()
+                System.out.println("hi");
+            }
+        });
 
     }
 }
