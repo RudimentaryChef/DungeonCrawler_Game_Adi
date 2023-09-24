@@ -44,7 +44,7 @@
         android:contentDescription="@string/user_sprite"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/game_title"
-        app:srcCompat="@drawable/wizard_sprite" />
+        app:srcCompat="@drawable/sprite_1" />
 
     <TextView
         android:id="@+id/player_difficulty"

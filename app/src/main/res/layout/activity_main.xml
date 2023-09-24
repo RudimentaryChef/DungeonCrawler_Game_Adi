@@ -16,7 +16,7 @@
         android:fontFamily="@font/press_start_2p"
         android:text="@string/title"
         android:textAlignment="center"
-        android:textColor="#B53F3F"
+        android:textColor="#F1ECEC"
         android:textSize="34sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"

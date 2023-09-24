@@ -1,6 +1,8 @@
 package com.example.cs2340c_team41;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 import android.os.Bundle;
@@ -22,10 +24,12 @@ public class MainActivity extends AppCompatActivity {
         startApplicationBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Intent intent = new Intent()
-                System.out.println("hi");
+                goToConfigScreen();
             }
         });
-
+    }
+    public void goToConfigScreen(){
+        Intent intent = new Intent(this, InitialConfigActivity.class);
+        startActivity(intent);
     }
 }

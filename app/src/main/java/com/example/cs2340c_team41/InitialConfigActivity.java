@@ -7,23 +7,24 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class IntialConfigActivity extends AppCompatActivity {
+public class InitialConfigActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_intial_config);
+        setContentView(R.layout.activity_initial_config);
 
         //make buttons for changing difficulty
-        Button rightBtnDiff = findViewById(R.id.rightButtonDiff);
-        Button leftBtnDiff = findViewById(R.id.leftButtonDiff);
+        ImageButton rightBtnDiff = findViewById(R.id.rightButtonDiff);
+        ImageButton leftBtnDiff = findViewById(R.id.leftButtonDiff);
 
         //make buttons for changing character
-        Button rightBtnChar = findViewById(R.id.rightButtonChar);
-        Button leftBtnChar = findViewById(R.id.leftButtonChar);
+        ImageButton rightBtnChar = findViewById(R.id.rightButtonChar);
+        ImageButton leftBtnChar = findViewById(R.id.leftButtonChar);
 
         //makes button for starting the game
         Button startBtn = findViewById(R.id.startButton);
@@ -32,14 +33,14 @@ public class IntialConfigActivity extends AppCompatActivity {
         TextView diffTxt = findViewById(R.id.diffText);
 
         //display the selected character
-        ImageView sprite = findViewById(R.id.charImage);
+        ImageView sprite = findViewById(R.id.character_image);
 
         //allow the textBox to store input name
         EditText nameBox = findViewById(R.id.nameTextbox);
 
         //track what difficulty and character is selected
-        final int[] diffTracker = {1};
-        final int[] charTracker = {1};
+        int[] diffTracker = {1};
+        int[] charTracker = {1};
 
         //selects difficulty to the left
         leftBtnDiff.setOnClickListener(new View.OnClickListener() {
@@ -80,13 +81,13 @@ public class IntialConfigActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (charTracker[0] == 1) {
-                    sprite.setImageResource(R.drawable.testsprite3);
+                    sprite.setImageResource(R.drawable.sprite_3);
                     charTracker[0] = 3;
                 } else if (charTracker[0] == 2) {
-                    sprite.setImageResource(R.drawable.testsprite1);
+                    sprite.setImageResource(R.drawable.sprite_1);
                     charTracker[0] = 1;
                 } else {
-                    sprite.setImageResource(R.drawable.testsprite2);
+                    sprite.setImageResource(R.drawable.sprite_2);
                     charTracker[0] = 2;
                 }
             }
@@ -97,13 +98,13 @@ public class IntialConfigActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (charTracker[0] == 1) {
-                    sprite.setImageResource(R.drawable.testsprite2);
+                    sprite.setImageResource(R.drawable.sprite_2);
                     charTracker[0] = 2;
                 } else if (charTracker[0] == 2) {
-                    sprite.setImageResource(R.drawable.testsprite3);
+                    sprite.setImageResource(R.drawable.sprite_3);
                     charTracker[0] = 3;
                 } else {
-                    sprite.setImageResource(R.drawable.testsprite1);
+                    sprite.setImageResource(R.drawable.sprite_1);
                     charTracker[0] = 1;
                 }
             }
@@ -116,13 +117,32 @@ public class IntialConfigActivity extends AppCompatActivity {
                 if (nameBox.getText() == null || nameBox.getText().toString().trim().isEmpty()) {
                     nameBox.setBackgroundColor(Color.rgb(255, 114, 118));
                 } else {
-                    //Intent game = new Intent(IntialConfigActivity.this, rishis.class);
-                    //game.putExtra("name", nameBox.getText().toString());
-                    //game.putExtra("difficulty", diffTracker[0]);
-                    //game.putExtra("character", charTracker[0]);
-                    //startActivity(game);
+//                    goToGameScreen();
+                    Intent game = new Intent(getApplicationContext(), GameScreenActivity.class);
+                    game.putExtra("name", nameBox.getText().toString());
+                    String difficultyText = "";
+                    if (diffTracker[0] == 1) {
+                        difficultyText = "Easy";
+                    } else if (diffTracker[0] == 2) {
+                        difficultyText = "Medium";
+                    } else {
+                        difficultyText = "Hard";
+                    }
+                    game.putExtra("difficulty", difficultyText);
+                    String character = "sprite_2";
+                    if (charTracker[0] == 1) {
+                        character = "sprite_1";
+                    } else if (charTracker[0] == 3) {
+                        character = "sprite_3";
+                    }
+                    game.putExtra("character", character);
+                    startActivity(game);
                 }
             }
         });
+    }
+    public void goToGameScreen(){
+        Intent intent = new Intent(this, GameScreenActivity.class);
+        startActivity(intent);
     }
 }
