@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-    public void goToConfigScreen(){
+    public void goToConfigScreen() {
         Intent intent = new Intent(this, InitialConfigActivity.class);
         startActivity(intent);
     }

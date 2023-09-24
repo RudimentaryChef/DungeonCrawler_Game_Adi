@@ -16,32 +16,32 @@ public class GameScreenActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Intent intent = getIntent();
-        String PLAYER_NAME = intent.getStringExtra("name");
+        String playerName = intent.getStringExtra("name");
         String difficulty = intent.getStringExtra("difficulty");
         String sprite = intent.getStringExtra("character");
-        int HP = 100;
+        int hp = 100;
         if (difficulty.equals("Easy")) {
-            HP = 200;
+            hp = 200;
         } else if (difficulty.equals("Hard")) {
-            HP = 50;
+            hp = 50;
         }
         TextView text;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_screen);
         text = findViewById(R.id.player_name);
-        text.setText(PLAYER_NAME);
+        text.setText(playerName);
         text = findViewById(R.id.player_hp);
-        text.setText(String.format("HP: %s", HP));
+        text.setText(String.format("HP: %s", hp));
         text = findViewById(R.id.player_difficulty);
         text.setText((String.format("Difficulty: %s", difficulty)));
         Button btn = (Button) findViewById(R.id.exitBtn);
-        ImageView player_sprite = findViewById(R.id.player_sprite);
+        ImageView playerSprite = findViewById(R.id.player_sprite);
         if (sprite.equals("sprite_1")) {
-            player_sprite.setImageResource(R.drawable.sprite_1);
+            playerSprite.setImageResource(R.drawable.sprite_1);
         } else if (sprite.equals("sprite_2")) {
-            player_sprite.setImageResource(R.drawable.sprite_2);
+            playerSprite.setImageResource(R.drawable.sprite_2);
         } else {
-            player_sprite.setImageResource(R.drawable.sprite_3);
+            playerSprite.setImageResource(R.drawable.sprite_3);
         }
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,7 +50,7 @@ public class GameScreenActivity extends AppCompatActivity {
             }
         });
     }
-    public void goToEndScreen(){
+    public void goToEndScreen() {
         Intent intent = new Intent(this, EndScreenActivity.class);
         startActivity(intent);
     }

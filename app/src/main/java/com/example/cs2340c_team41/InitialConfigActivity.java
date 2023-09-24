@@ -117,7 +117,6 @@ public class InitialConfigActivity extends AppCompatActivity {
                 if (nameBox.getText() == null || nameBox.getText().toString().trim().isEmpty()) {
                     nameBox.setBackgroundColor(Color.rgb(255, 114, 118));
                 } else {
-//                    goToGameScreen();
                     Intent game = new Intent(getApplicationContext(), GameScreenActivity.class);
                     game.putExtra("name", nameBox.getText().toString());
                     String difficultyText = "";
@@ -141,7 +140,7 @@ public class InitialConfigActivity extends AppCompatActivity {
             }
         });
     }
-    public void goToGameScreen(){
+    public void goToGameScreen() {
         Intent intent = new Intent(this, GameScreenActivity.class);
         startActivity(intent);
     }
