@@ -46,12 +46,12 @@ public class GameScreenActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                returnHome();
+                goToEndScreen();
             }
         });
     }
-    public void returnHome(){
-        Intent intent = new Intent(this, MainActivity.class);
+    public void goToEndScreen(){
+        Intent intent = new Intent(this, EndScreenActivity.class);
         startActivity(intent);
     }
 }
