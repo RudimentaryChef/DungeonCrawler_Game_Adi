@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
     public void goToConfigScreen() {
-        Intent intent = new Intent(this, InitialConfigActivity.class);
+        Intent intent = new Intent(getApplicationContext(), InitialConfigActivity.class);
         startActivity(intent);
     }
 }
