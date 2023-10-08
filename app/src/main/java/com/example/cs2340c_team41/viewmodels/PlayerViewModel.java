@@ -7,6 +7,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.cs2340c_team41.model.Player;
 import androidx.lifecycle.ViewModel;
 public class PlayerViewModel extends ViewModel{
-    Player player = Player.getInstance("Player 1", 100, 0, 0, 0, null);
+    private Player player;
+    public PlayerViewModel(){
+        player = Player.getInstance("Player 1", 100, 0, 0, 0, null);
+    }
+
 
 }
