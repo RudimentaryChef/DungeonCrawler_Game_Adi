@@ -15,7 +15,7 @@ public class Player {
         this.x_loc = x_loc;
         this.y_loc = y_loc;
         this.score = score;
-        this.playerSprite = this.playerSprite;
+        this.playerSprite = playerSprite;
 
     }
     public static Player getInstance(String name, int health, int x_loc, int y_loc, int score, ImageView playerSprite){
