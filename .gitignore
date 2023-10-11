@@ -26,6 +26,10 @@ render.experimental.xml
 *.jks
 *.keystore
 
+# DS_Store
+.DS_Store
+app/.DS_Store
+
 # Google Services (e.g. APIs or Firebase)
 google-services.json
 

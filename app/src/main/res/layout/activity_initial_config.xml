@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background='#1B1B1B'
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/startButton"
+        android:layout_width="132dp"
+        android:layout_height="73dp"
+        android:layout_marginStart="158dp"
+        android:layout_marginTop="352dp"
+        android:layout_marginEnd="165dp"
+        android:backgroundTint="#04BC4E"
+        android:fontFamily="@font/press_start_2p"
+        android:text="START"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.431"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.869" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="318dp"
+        android:layout_height="79dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="44dp"
+        android:fontFamily="@font/press_start_2p"
+        android:text="@string/dungeon_crawler"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="34sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/character_image"
+        android:layout_width="186dp"
+        android:layout_height="247dp"
+        android:contentDescription="Sprite 1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.506"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.289"
+        app:srcCompat="@drawable/sprite_1" />
+
+    <ImageButton
+        android:id="@+id/rightButtonChar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="240dp"
+        android:layout_marginEnd="40dp"
+        android:backgroundTint="#00FFFFFF"
+        android:contentDescription="Switch characters"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/arrow_forward"
+        app:tint="#FFFFFF" />
+
+    <TextView
+        android:id="@+id/diffText"
+        android:layout_width="200dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="108dp"
+        android:layout_marginTop="528dp"
+        android:background="#00D5D5D5"
+        android:backgroundTint="#00121212"
+        android:fontFamily="@font/press_start_2p"
+        android:padding="10dp"
+        android:text="Easy"
+        android:textAlignment="center"
+        android:textColor="#E6E1E1"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/rightButtonDiff"
+        android:layout_width="61dp"
+        android:layout_height="61dp"
+        android:layout_marginTop="520dp"
+        android:layout_marginEnd="36dp"
+        android:backgroundTint="#00FFFFFF"
+        android:contentDescription="Switch difficulty"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/arrow_forward"
+        app:tint="#FFFFFF" />
+
+    <ImageButton
+        android:id="@+id/leftButtonDiff"
+        android:layout_width="61dp"
+        android:layout_height="61dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="520dp"
+        android:backgroundTint="#00FFFFFF"
+        android:contentDescription="Switch difficulty"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/arrow_backward"
+        app:tint="#FFFFFF" />
+
+    <ImageButton
+        android:id="@+id/leftButtonChar"
+        android:layout_width="70dp"
+        android:layout_height="67dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="240dp"
+        android:backgroundTint="#00FFFFFF"
+        android:contentDescription="Switch characters"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/arrow_backward"
+        app:tint="#FFFFFF" />
+
+    <EditText
+        android:id="@+id/nameTextbox"
+        android:layout_width="242dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="84dp"
+        android:layout_marginTop="428dp"
+        android:background="#FFFFFF"
+        android:fontFamily="@font/press_start_2p"
+        android:padding="10dp"
+        android:text=""
+        android:hint="Name"
+        android:textAlignment="center"
+        android:textColor="#373636"
+        android:imeActionLabel="Done"
+        android:imeOptions="actionDone"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
