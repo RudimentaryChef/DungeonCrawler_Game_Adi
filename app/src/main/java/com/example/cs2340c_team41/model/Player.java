@@ -8,6 +8,7 @@ public class Player {
     private int score;
     private Integer playerSprite;
     private static volatile Player instance;
+
     private Player(String name, int health, double xPosition, double yPosition, int score, Integer
             playerSprite) {
         this.name = name;
@@ -17,6 +18,7 @@ public class Player {
         this.score = score;
         this.playerSprite = playerSprite;
     }
+    
     public static Player getInstance(String name, int health, double xPosition, double yPosition,
                                      int score, Integer playerSprite) {
         if (instance == null) {
@@ -61,6 +63,9 @@ public class Player {
     }
     public void setScore(int score) {
         this.score = score;
+    }
+    public void setPlayerSprite(Integer playerSprite) {
+        this.playerSprite = playerSprite;
     }
 
 }
