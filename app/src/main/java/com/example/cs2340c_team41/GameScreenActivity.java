@@ -10,11 +10,17 @@ import android.widget.ImageView;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import java.util.HashMap;
+
 public class GameScreenActivity extends AppCompatActivity {
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        HashMap<String, Integer> map = new HashMap<>();
+        map.put("sprite_1", R.drawable.sprite_1);
+        map.put("sprite_2", R.drawable.sprite_2);
+        map.put("sprite_3", R.drawable.sprite_3);
         Intent intent = getIntent();
         String playerName = intent.getStringExtra("name");
         String difficulty = intent.getStringExtra("difficulty");
@@ -36,13 +42,7 @@ public class GameScreenActivity extends AppCompatActivity {
         text.setText((String.format("Difficulty: %s", difficulty)));
         Button btn = (Button) findViewById(R.id.exitBtn);
         ImageView playerSprite = findViewById(R.id.player_sprite);
-        if (sprite.equals("sprite_1")) {
-            playerSprite.setImageResource(R.drawable.sprite_1);
-        } else if (sprite.equals("sprite_2")) {
-            playerSprite.setImageResource(R.drawable.sprite_2);
-        } else {
-            playerSprite.setImageResource(R.drawable.sprite_3);
-        }
+        playerSprite.setImageResource(map.get(sprite));
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
