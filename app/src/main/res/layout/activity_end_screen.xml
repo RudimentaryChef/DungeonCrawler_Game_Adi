@@ -11,12 +11,82 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="48dp"
-        android:layout_marginTop="124dp"
+        android:layout_marginTop="52dp"
         android:fontFamily="@font/press_start_2p"
-        android:text=""
+        android:text="Leaderboard"
         android:textAlignment="center"
         android:textColor="#FBFBFB"
         android:textSize="28sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/latestAttempt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="416dp"
+        android:fontFamily="@font/press_start_2p"
+        android:text="Latest Attempt"
+        android:textAlignment="center"
+        android:textColor="#FBFBFB"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/restartBtn"
+        android:layout_width="155dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="128dp"
+        android:layout_marginTop="652dp"
+        android:backgroundTint="#11BD56"
+        android:fontFamily="@font/press_start_2p"
+        android:text="RESTART"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/leaderboardContent"
+        android:layout_width="313dp"
+        android:layout_height="220dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="148dp"
+        android:ems="10"
+        android:fontFamily="@font/press_start_2p"
+        android:inputType="textMultiLine"
+        android:lineSpacingExtra="8sp"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/leaderboardTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="112dp"
+        android:fontFamily="@font/press_start_2p"
+        android:text="Name  Score   Time"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/latestAttemptContent"
+        android:layout_width="316dp"
+        android:layout_height="27dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="496dp"
+        android:fontFamily="@font/press_start_2p"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

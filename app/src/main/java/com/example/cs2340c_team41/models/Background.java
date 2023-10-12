@@ -1,4 +1,4 @@
-package com.example.cs2340c_team41;
+package com.example.cs2340c_team41.models;
 
 import android.graphics.Bitmap;
 import android.content.res.Resources;

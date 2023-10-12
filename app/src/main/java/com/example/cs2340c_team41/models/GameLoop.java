@@ -1,7 +1,6 @@
-package com.example.cs2340c_team41;
+package com.example.cs2340c_team41.models;
 
 import android.graphics.Canvas;
-import android.view.Surface;
 import android.view.SurfaceHolder;
 import java.lang.Math;
 
@@ -100,6 +99,10 @@ public class GameLoop extends Thread {
                 startTime = System.currentTimeMillis();
             }
         }
+    }
+
+    public void stopLoop() {
+        isRunning = false;
     }
 
 }

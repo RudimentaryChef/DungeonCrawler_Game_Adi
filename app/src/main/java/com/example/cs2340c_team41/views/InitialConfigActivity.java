@@ -1,4 +1,4 @@
-package com.example.cs2340c_team41;
+package com.example.cs2340c_team41.views;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,6 +11,8 @@ import android.widget.ImageButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.cs2340c_team41.R;
 
 public class InitialConfigActivity extends AppCompatActivity {
     @Override
@@ -117,7 +119,7 @@ public class InitialConfigActivity extends AppCompatActivity {
                 if (nameBox.getText() == null || nameBox.getText().toString().trim().isEmpty()) {
                     nameBox.setBackgroundColor(Color.rgb(255, 114, 118));
                 } else {
-                    Intent game = new Intent(getApplicationContext(), GameScreenActivity.class);
+                    Intent game = new Intent(getApplicationContext(), GameActivity.class);
                     game.putExtra("name", nameBox.getText().toString());
                     String difficultyText = "";
                     if (diffTracker[0] == 1) {
@@ -134,14 +136,14 @@ public class InitialConfigActivity extends AppCompatActivity {
                     } else if (charTracker[0] == 3) {
                         character = "sprite_3";
                     }
-                    game.putExtra("character", character);
+                    game.putExtra("sprite", character);
                     startActivity(game);
                 }
             }
         });
     }
     public void goToGameScreen() {
-        Intent intent = new Intent(this, GameScreenActivity.class);
+        Intent intent = new Intent(this, GameActivity.class);
         startActivity(intent);
     }
 }

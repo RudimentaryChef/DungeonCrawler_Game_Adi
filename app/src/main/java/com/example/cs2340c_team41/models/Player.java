@@ -1,4 +1,4 @@
-package com.example.cs2340c_team41.model;
+package com.example.cs2340c_team41.models;
 
 public class Player {
     private String name;

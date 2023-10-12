@@ -1,4 +1,4 @@
-package com.example.cs2340c_team41;
+package com.example.cs2340c_team41.views;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,6 +6,9 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 import android.os.Bundle;
+
+import com.example.cs2340c_team41.R;
+import com.example.cs2340c_team41.views.InitialConfigActivity;
 
 public class MainActivity extends AppCompatActivity {
     @Override
@@ -29,8 +32,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
     public void goToConfigScreen() {
-//        Intent intent = new Intent(this, InitialConfigActivity.class);
-        Intent intent = new Intent(this, GameActivity.class);
+        Intent intent = new Intent(this, InitialConfigActivity.class);
         startActivity(intent);
     }
 }
