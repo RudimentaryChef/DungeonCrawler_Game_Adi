@@ -56,4 +56,8 @@ public class Leaderboard {
                 .append(this.latestAttempt.getTime()).append("\n");
         return res.toString();
     }
+
+    public void resetLeaderboard() {
+        leaderboard = null;
+    }
 }
