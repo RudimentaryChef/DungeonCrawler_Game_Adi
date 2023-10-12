@@ -1,4 +1,4 @@
-package com.example.cs2340c_team41;
+package com.example.cs2340c_team41.unitTests;
 
 import org.junit.Before;
 import org.junit.Test;
