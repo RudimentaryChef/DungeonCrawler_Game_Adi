@@ -27,18 +27,14 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     private Bitmap backgroundBitmap;
     private int tileNumber = 0;
     private Integer tileset;
-    private Bitmap nextButton;
-    private double nextButtonX;
-    private double nextButtonY;
+    private GameButton nextButton;
+    private GameButton endButton;
     private GameLoop gameLoop;
     private Context context;
     private PlayerViewModel playerViewModel;
     private String name;
     private int score;
     private Leaderboard leaderboard;
-    private Bitmap endButton;
-    private double endButtonX;
-    private double endButtonY;
     public Game(Context context, String sprite, String name, int hp) {
         super(context);
 
@@ -62,15 +58,14 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         int buttonWidth = button.getWidth();
         int buttonHeight = button.getHeight();
         int newWidth = 200;
-        this.nextButton = Bitmap.createScaledBitmap(
-                button, newWidth, buttonWidth * newWidth / buttonHeight, false);
+        this.nextButton = new GameButton(Bitmap.createScaledBitmap(
+                button, newWidth, buttonWidth * newWidth / buttonHeight, false));
 
         Bitmap endButton = BitmapFactory.decodeResource(context.getResources(), R.drawable.fast_forward);
         buttonWidth = endButton.getWidth();
         buttonHeight = endButton.getHeight();
-        newWidth = 200;
-        this.endButton = Bitmap.createScaledBitmap(
-                endButton, newWidth, buttonWidth * newWidth / buttonHeight, false);
+        this.endButton = new GameButton(Bitmap.createScaledBitmap(
+                endButton, newWidth, buttonWidth * newWidth / buttonHeight, false));
         this.tileset = R.drawable.tile1;
         setFocusable(true);
     }
@@ -80,14 +75,8 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
 
         switch(event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                int buttonWidth = this.nextButton.getWidth();
-                int buttonHeight = this.nextButton.getHeight();
-                double topLeftX = this.nextButtonX;
-                double topLeftY = this.nextButtonY;
-                double bottomRightX = this.nextButtonX + buttonWidth;
-                double bottomRightY  = this.nextButtonY + buttonHeight;
-                if ((event.getX() > topLeftX && event.getX() < bottomRightX) &&
-                (event.getY() > topLeftY && event.getY() < bottomRightY)) {
+                // detect when the nextButton is clicked
+                if (isButtonClicked(nextButton, event)) {
                     tileNumber = (tileNumber + 1) % 3;
                     if (tileNumber == 0) {
                         this.tileset = R.drawable.tile1;
@@ -97,16 +86,11 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
                         this.tileset = R.drawable.tile3;
                     }
                 }
-                buttonWidth = this.endButton.getWidth();
-                buttonHeight = this.endButton.getHeight();
-                topLeftX = this.endButtonX;
-                topLeftY = this.endButtonY;
-                bottomRightX = this.endButtonX + buttonWidth;
-                bottomRightY  = this.endButtonY + buttonHeight;
-                if ((event.getX() > topLeftX && event.getX() < bottomRightX) &&
-                        (event.getY() > topLeftY && event.getY() < bottomRightY)) {
+                // detect when the endButton is clicked
+                if (isButtonClicked(endButton, event)) {
                     goToEndScreen();
                 }
+
         }
 
         return super.onTouchEvent(event);
@@ -135,8 +119,8 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         drawScore(canvas);
         playerViewModel.positionPlayer((float) getWidth() / 2, (float) getHeight() / 2);
         playerViewModel.draw(this.context, canvas);
-        drawNextButton(canvas);
-        drawEndButton(canvas);
+        nextButton.draw(canvas, getWidth() - 100, (float) getHeight() / 2);
+        endButton.draw(canvas, getWidth() - 100, getHeight() - 100);
     }
 
     public void drawUPS(Canvas canvas) {
@@ -182,21 +166,6 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         canvas.drawRect(0, 0,  getWidth(), getHeight(), paint);
     }
 
-    public void drawNextButton(Canvas canvas) {
-        Bitmap button = this.nextButton;
-        canvas.drawBitmap(button, (float) canvas.getWidth() - 100 - (float) button.getWidth() / 2,
-                (float) canvas.getHeight() / 2 - (float) button.getHeight() / 2, null);
-        this.nextButtonX = (float) canvas.getWidth() - 100 - (float) button.getWidth() / 2;
-        this.nextButtonY = (float) canvas.getHeight() / 2 - (float) button.getHeight() / 2;
-    }
-
-    public void drawEndButton(Canvas canvas) {
-        Bitmap button = this.endButton;
-        this.endButtonX = (float) canvas.getWidth() - 100 - (float) button.getWidth() / 2;
-        this.endButtonY = (float) canvas.getHeight() - 100 - (float) button.getHeight() / 2;
-        canvas.drawBitmap(button, (float) this.endButtonX,
-                (float) this.endButtonY, null);
-    }
 
     public void update() {
         this.score = calculateScore();
@@ -213,7 +182,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         gameLoop.stopLoop();
         Intent intent = new Intent(this.getContext(), EndScreenActivity.class);
         Attempt newAttempt = new Attempt(this.name, this.score, getCurrentTime());
-        this.leaderboard.addAttempt(newAttempt);
+        leaderboard.addAttempt(newAttempt);
         context.startActivity(intent);
     }
 
@@ -228,4 +197,17 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         String formattedTime = dateFormat.format(currentDate);
         return formattedTime;
     }
+
+    public boolean isButtonClicked(GameButton button, MotionEvent event) {
+        int buttonWidth = button.getWidth();
+        int buttonHeight = button.getHeight();
+        double topLeftX = button.getButtonX();
+        double topLeftY = button.getButtonY();
+        double bottomRightX = topLeftX + buttonWidth;
+        double bottomRightY = topLeftY + buttonHeight;
+
+        return (event.getX() > topLeftX && event.getX() < bottomRightX) &&
+                (event.getY() > topLeftY && event.getY() < bottomRightY);
+    }
+
 }
