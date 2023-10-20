@@ -123,27 +123,6 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         endButton.draw(canvas, getWidth() - 100, getHeight() - 100);
     }
 
-    public void drawUPS(Canvas canvas) {
-        String averageUPS = Double.toString(gameLoop.getAverageUPS());
-        Paint paint = new Paint();
-        int color = ContextCompat.getColor(context, R.color.white);
-        Typeface customTypeface = ResourcesCompat.getFont(context, R.font.press_start_2p);
-        paint.setTypeface(customTypeface);
-        paint.setTextSize(100);
-        paint.setColor(color);
-        canvas.drawText("UPS: " + averageUPS, 100, 300, paint);
-    }
-
-    public void drawFPS(Canvas canvas) {
-        String averageFPS = Double.toString(gameLoop.getAverageFPS());
-        Paint paint = new Paint();
-        int color = ContextCompat.getColor(context, R.color.white);
-        paint.setTypeface(ResourcesCompat.getFont(context, R.font.press_start_2p));
-        paint.setTextSize(100);
-        paint.setColor(color);
-        canvas.drawText("FPS: " + averageFPS, 100, 500, paint);
-    }
-
     public void drawScore(Canvas canvas) {
         this.score = 100 - (int) gameLoop.getElapsedTime();
         String score = Integer.toString(this.score);
@@ -165,7 +144,6 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         paint.setShader(new BitmapShader(tile, Shader.TileMode.REPEAT, Shader.TileMode.REPEAT));
         canvas.drawRect(0, 0,  getWidth(), getHeight(), paint);
     }
-
 
     public void update() {
         this.score = calculateScore();
@@ -208,6 +186,27 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
 
         return (event.getX() > topLeftX && event.getX() < bottomRightX) &&
                 (event.getY() > topLeftY && event.getY() < bottomRightY);
+    }
+
+    public void drawUPS(Canvas canvas) {
+        String averageUPS = Double.toString(gameLoop.getAverageUPS());
+        Paint paint = new Paint();
+        int color = ContextCompat.getColor(context, R.color.white);
+        Typeface customTypeface = ResourcesCompat.getFont(context, R.font.press_start_2p);
+        paint.setTypeface(customTypeface);
+        paint.setTextSize(100);
+        paint.setColor(color);
+        canvas.drawText("UPS: " + averageUPS, 100, 300, paint);
+    }
+
+    public void drawFPS(Canvas canvas) {
+        String averageFPS = Double.toString(gameLoop.getAverageFPS());
+        Paint paint = new Paint();
+        int color = ContextCompat.getColor(context, R.color.white);
+        paint.setTypeface(ResourcesCompat.getFont(context, R.font.press_start_2p));
+        paint.setTextSize(100);
+        paint.setColor(color);
+        canvas.drawText("FPS: " + averageFPS, 100, 500, paint);
     }
 
 }
