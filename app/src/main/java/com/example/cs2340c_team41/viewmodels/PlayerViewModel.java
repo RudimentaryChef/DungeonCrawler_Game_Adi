@@ -14,16 +14,19 @@ import java.util.HashMap;
 public class PlayerViewModel extends ViewModel {
     private Player player;
 
-    public PlayerViewModel(String playerName, int playerHealth, double xPosition, double yPosition, int score, String sprite) {
+    public PlayerViewModel(String playerName, int playerHealth, double xPosition, double yPosition,
+                           int score, String sprite) {
         HashMap<String, Integer> map = new HashMap<>();
         map.put("sprite_1", R.drawable.sprite_1);
         map.put("sprite_2", R.drawable.sprite_2);
         map.put("sprite_3", R.drawable.sprite_3);
-        this.player = Player.getInstance(playerName, playerHealth, xPosition, yPosition, score, map.get(sprite));
+        this.player = Player.getInstance(playerName, playerHealth, xPosition, yPosition, score,
+                map.get(sprite));
     }
 
     public void draw(Context context, Canvas canvas) {
-        Bitmap sprite = BitmapFactory.decodeResource(context.getResources(), player.getPlayerSprite());
+        Bitmap sprite = BitmapFactory.decodeResource(context.getResources(),
+                player.getPlayerSprite());
         int width = sprite.getWidth();
         int height = sprite.getHeight();
         int newWidth = 200;
@@ -84,6 +87,7 @@ public class PlayerViewModel extends ViewModel {
     public void enterRight() {
         player.setXLoc(100);
     }
+
     public void enterLeft(float x) {
         player.setXLoc(x);
     }

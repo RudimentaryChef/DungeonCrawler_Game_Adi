@@ -8,7 +8,6 @@ import android.widget.Button;
 import android.os.Bundle;
 
 import com.example.cs2340c_team41.R;
-import com.example.cs2340c_team41.views.InitialConfigActivity;
 
 public class MainActivity extends AppCompatActivity {
     @Override
