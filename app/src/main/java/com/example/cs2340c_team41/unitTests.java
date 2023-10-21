@@ -2,6 +2,8 @@ package com.example.cs2340c_team41;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import com.example.cs2340c_team41.models.Bounds;
 import com.example.cs2340c_team41.models.Leaderboard;
 import com.example.cs2340c_team41.models.Attempt;
 import com.example.cs2340c_team41.models.Player;
@@ -157,7 +159,7 @@ public class unitTests {
         // Test the moveRight method
         double initialX = playerViewModel.getPlayer().getX();
         playerViewModel.moveRight();
-        assertEquals(initialX - 10, playerViewModel.getPlayer().getX(), 0.0);
+        assertEquals(initialX + 10, playerViewModel.getPlayer().getX(), 0.0);
     }
 
     @Test
@@ -165,31 +167,33 @@ public class unitTests {
         // Test the moveLeft method
         double initialX = playerViewModel.getPlayer().getX();
         playerViewModel.moveLeft();
-        assertEquals(initialX + 10, playerViewModel.getPlayer().getX(), 0.0);
+        assertEquals(initialX - 10, playerViewModel.getPlayer().getX(), 0.0);
     }
 
     @Test
     public void testCheckBoundsLeftEdge() {
         // Test the checkBounds method when the player is at the left edge
-        playerViewModel.moveLeft();  // Force the player to be at the left edge
-        BoundsStatus status = playerViewModel.checkBounds(200, 200);
-        assertEquals(BoundsStatus.LEFT_EDGE, status);
+        int i = 0;
+        while (i < 100) {
+            playerViewModel.moveLeft();  // Force the player to be at the left edge
+            i++;
+        }
+        Bounds status = playerViewModel.checkBounds(200, 200);
+        assertEquals(Bounds.LEFT_EDGE, status);
     }
-
-    // Similar tests can be written for BoundsStatus.RIGHT_EDGE, moveDown, and moveUp methods.
 
     @Test
     public void testEnterRight() {
         // Test the enterRight method
-        playerViewModel.enterRight();
-        assertEquals(100.0, playerViewModel.getPlayer().getX(), 0.0);
+        double newX = 1200.0;
+        playerViewModel.enterRight((float) newX);
+        assertEquals(newX, playerViewModel.getPlayer().getX(), 0.0);
     }
 
     @Test
     public void testEnterLeft() {
         // Test the enterLeft method
-        double newX = 50.0;
-        playerViewModel.enterLeft((float) newX);
-        assertEquals(newX, playerViewModel.getPlayer().getX(), 0.0);
+        playerViewModel.enterLeft();
+        assertEquals(100.0, playerViewModel.getPlayer().getX(), 0.0);
     }
 }

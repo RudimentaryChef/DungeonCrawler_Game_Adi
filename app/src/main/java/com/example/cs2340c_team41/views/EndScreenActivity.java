@@ -16,6 +16,13 @@ public class EndScreenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_end_screen);
+        int gameStatus = getIntent().getIntExtra("status", 0);
+        TextView statusContent = findViewById(R.id.statusContent);
+        if (gameStatus == 1) {
+            statusContent.setText("You won!");
+        } else {
+            statusContent.setText("You lost.");
+        }
         Leaderboard leaderboard = Leaderboard.getInstance();
         TextView leaderboardContent = findViewById(R.id.leaderboardContent);
         leaderboardContent.setText(leaderboard.getLeaderboard());

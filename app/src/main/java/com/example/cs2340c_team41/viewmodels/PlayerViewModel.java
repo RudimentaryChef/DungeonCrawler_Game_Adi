@@ -4,7 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 
-import com.example.cs2340c_team41.BoundsStatus;
+import com.example.cs2340c_team41.models.Bounds;
 import com.example.cs2340c_team41.R;
 import com.example.cs2340c_team41.models.Player;
 import androidx.lifecycle.ViewModel;
@@ -57,38 +57,38 @@ public class PlayerViewModel extends ViewModel {
         player.setYLoc(player.getY() + 10);
     }
 
-    public void moveRight() {
+    public void moveLeft() {
         player.setXLoc(player.getX() - 10);
     }
 
-    public void moveLeft() {
+    public void moveRight() {
         player.setXLoc(player.getX() + 10);
     }
 
-    public BoundsStatus checkBounds(float x, float y) {
+    public Bounds checkBounds(float x, float y) {
         if (player.getX() < 100) {
-            moveLeft();
-            return BoundsStatus.LEFT_EDGE;
+            moveRight();
+            return Bounds.LEFT_EDGE;
         }
         if (player.getY() < 100) {
             moveDown();
         }
         if (player.getX() > x) {
-            moveRight();
-            return BoundsStatus.RIGHT_EDGE;
+            moveLeft();
+            return Bounds.RIGHT_EDGE;
         }
         if (player.getY() > y) {
             moveUp();
         }
-        return BoundsStatus.INSIDE;
+        return Bounds.INSIDE;
     }
 
 
-    public void enterRight() {
+    public void enterLeft() {
         player.setXLoc(100);
     }
 
-    public void enterLeft(float x) {
+    public void enterRight(float x) {
         player.setXLoc(x);
     }
 

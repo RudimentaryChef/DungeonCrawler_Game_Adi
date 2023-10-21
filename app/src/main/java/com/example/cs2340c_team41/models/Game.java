@@ -16,7 +16,6 @@ import android.view.SurfaceHolder;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 
-import com.example.cs2340c_team41.BoundsStatus;
 import com.example.cs2340c_team41.R;
 import com.example.cs2340c_team41.viewmodels.PlayerViewModel;
 import com.example.cs2340c_team41.views.EndScreenActivity;
@@ -28,9 +27,8 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     private Bitmap backgroundBitmap;
     private int tileNumber = 0;
     private Integer tileset;
-    private GameButton endButton;
     private GameButton upButton;
-    private int direction = 0;
+    private Direction direction = Direction.NO_DIRECTION;
     private GameButton downButton;
     private GameButton rightButton;
     private GameButton leftButton;
@@ -62,17 +60,10 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         int buttonHeight;
         int newWidth = 200;
 
-        Bitmap endButton = BitmapFactory.decodeResource(context.getResources(),
-                R.drawable.fast_forward);
-        buttonWidth = endButton.getWidth();
-        buttonHeight = endButton.getHeight();
-        this.endButton = new GameButton(Bitmap.createScaledBitmap(
-                endButton, newWidth, buttonWidth * newWidth / buttonHeight, false));
-
         Bitmap upButton = BitmapFactory.decodeResource(context.getResources(),
                 R.drawable.up_arrow);
-        buttonWidth = endButton.getWidth();
-        buttonHeight = endButton.getHeight();
+        buttonWidth = upButton.getWidth();
+        buttonHeight = upButton.getHeight();
         this.upButton = new GameButton(Bitmap.createScaledBitmap(
                 upButton, newWidth, buttonWidth * newWidth / buttonHeight, false));
 
@@ -104,29 +95,25 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     public boolean onTouchEvent(MotionEvent event) {
 
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            // detect when the endButton is clicked
-            if (isButtonClicked(endButton, event)) {
-                goToEndScreen();
-            }
-            // map keyword functionality
+            // map keypad functionality
             if (isButtonClicked(upButton, event)) {
-                direction = 1;
+                direction = Direction.UP;
                 return true;
             }
             if (isButtonClicked(downButton, event)) {
-                direction = 2;
+                direction = Direction.DOWN;
                 return true;
             }
             if (isButtonClicked(leftButton, event)) {
-                direction = 3;
+                direction = Direction.LEFT;
                 return true;
             }
             if (isButtonClicked(rightButton, event)) {
-                direction = 4;
+                direction = Direction.RIGHT;
                 return true;
             }
         } else if (event.getAction() == MotionEvent.ACTION_UP) {
-            direction = 0;
+            direction = Direction.NO_DIRECTION;
         }
 
         return super.onTouchEvent(event);
@@ -135,7 +122,8 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         gameLoop.startLoop();
-        playerViewModel.positionPlayer((float) getWidth() / 2, (float) getHeight() / 2);
+        playerViewModel.positionPlayer((float) getWidth() / 2,
+                (float) getHeight() / 2);
 
     }
 
@@ -155,7 +143,6 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         drawBackground(canvas);
         drawScore(canvas);
         playerViewModel.draw(this.context, canvas);
-        endButton.draw(canvas, 100, getHeight() - 100);
         drawKeyPad(canvas, getWidth() - 300, getHeight() - 300);
     }
 
@@ -183,29 +170,24 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
 
     public void update() {
         this.score = calculateScore();
+
         // maintain a certain direction if the button remains pressed
-        if (direction == 1) {
-            playerViewModel.moveUp();
-        } else if (direction == 2) {
-            playerViewModel.moveDown();
-        } else if (direction == 3) {
-            playerViewModel.moveLeft();
-        } else if (direction == 4) {
-            playerViewModel.moveRight();
-        }
-        BoundsStatus bounds = playerViewModel.checkBounds(getWidth() - 100,
+        maintainDirection(direction);
+
+        Bounds bounds = playerViewModel.checkBounds(getWidth() - 100,
                 getHeight() - 100);
-        if (bounds == BoundsStatus.RIGHT_EDGE) {
-            tileNumber = (tileNumber - 1) % 3;
-            playerViewModel.enterLeft(getWidth() - 100);
-        } else if (bounds == BoundsStatus.LEFT_EDGE) {
+        if (bounds == Bounds.RIGHT_EDGE) {
             if (tileNumber == 2) {
-                goToEndScreen();
+                goToEndScreen(1);
                 return;
             }
             tileNumber = (tileNumber + 1) % 3;
-            playerViewModel.enterRight();
+            playerViewModel.enterLeft();
+        } else if (bounds == Bounds.LEFT_EDGE) {
+            tileNumber = (tileNumber - 1) % 3;
+            playerViewModel.enterRight(getWidth() - 100);
         }
+
         if (tileNumber == 0) {
             this.tileset = R.drawable.tile1;
         } else if (tileNumber == 1) {
@@ -214,7 +196,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
             this.tileset = R.drawable.tile3;
         }
         if (this.score == 0) {
-            goToEndScreen();
+            goToEndScreen(0);
         }
     }
 
@@ -222,11 +204,12 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         return 100 - (int) gameLoop.getElapsedTime();
     }
 
-    public void goToEndScreen() {
+    public void goToEndScreen(int gameStatus) {
         gameLoop.stopLoop();
         Intent intent = new Intent(this.getContext(), EndScreenActivity.class);
         Attempt newAttempt = new Attempt(this.name, this.score, getCurrentTime());
         leaderboard.addAttempt(newAttempt);
+        intent.putExtra("status", gameStatus);
         context.startActivity(intent);
     }
 
@@ -257,8 +240,20 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     public void drawKeyPad(Canvas canvas, float x, float y) {
         upButton.draw(canvas, x, y - 150);
         downButton.draw(canvas, x, y + 150);
-        rightButton.draw(canvas, x - 150, y);
-        leftButton.draw(canvas, x + 150, y);
+        rightButton.draw(canvas, x + 150, y);
+        leftButton.draw(canvas, x - 150, y);
+    }
+
+    public void maintainDirection(Direction direction) {
+        if (direction == Direction.UP) {
+            playerViewModel.moveUp();
+        } else if (direction == Direction.DOWN) {
+            playerViewModel.moveDown();
+        } else if (direction == Direction.LEFT) {
+            playerViewModel.moveLeft();
+        } else if (direction == Direction.RIGHT) {
+            playerViewModel.moveRight();
+        }
     }
 
     public void drawUPS(Canvas canvas) {
