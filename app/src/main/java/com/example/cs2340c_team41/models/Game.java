@@ -27,8 +27,11 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     private Bitmap backgroundBitmap;
     private int tileNumber = 0;
     private Integer tileset;
-    private GameButton nextButton;
-    private GameButton endButton;
+    private GameButton upButton;
+    private Direction direction = Direction.NO_DIRECTION;
+    private GameButton downButton;
+    private GameButton rightButton;
+    private GameButton leftButton;
     private GameLoop gameLoop;
     private Context context;
     private PlayerViewModel playerViewModel;
@@ -48,24 +51,42 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         this.leaderboard = Leaderboard.getInstance();
 
         this.playerViewModel =
-                new PlayerViewModel(getContext(), name, hp,
+                new PlayerViewModel(name, hp,
                         (float) getWidth(), (float) getHeight(),
                         100, sprite);
 
         playerViewModel.setSprite(sprite);
-
-        Bitmap button = BitmapFactory.decodeResource(context.getResources(), R.drawable.arrow_forward);
-        int buttonWidth = button.getWidth();
-        int buttonHeight = button.getHeight();
+        int buttonWidth;
+        int buttonHeight;
         int newWidth = 200;
-        this.nextButton = new GameButton(Bitmap.createScaledBitmap(
-                button, newWidth, buttonWidth * newWidth / buttonHeight, false));
 
-        Bitmap endButton = BitmapFactory.decodeResource(context.getResources(), R.drawable.fast_forward);
-        buttonWidth = endButton.getWidth();
-        buttonHeight = endButton.getHeight();
-        this.endButton = new GameButton(Bitmap.createScaledBitmap(
-                endButton, newWidth, buttonWidth * newWidth / buttonHeight, false));
+        Bitmap upButton = BitmapFactory.decodeResource(context.getResources(),
+                R.drawable.up_arrow);
+        buttonWidth = upButton.getWidth();
+        buttonHeight = upButton.getHeight();
+        this.upButton = new GameButton(Bitmap.createScaledBitmap(
+                upButton, newWidth, buttonWidth * newWidth / buttonHeight, false));
+
+        Bitmap rightButton = BitmapFactory.decodeResource(context.getResources(),
+                R.drawable.right_arrow);
+        buttonWidth = rightButton.getWidth();
+        buttonHeight = rightButton.getHeight();
+        this.rightButton = new GameButton(Bitmap.createScaledBitmap(
+                rightButton, newWidth, buttonWidth * newWidth / buttonHeight, false));
+
+        Bitmap downButton = BitmapFactory.decodeResource(context.getResources(),
+                R.drawable.down_arrow);
+        buttonWidth = downButton.getWidth();
+        buttonHeight = downButton.getHeight();
+        this.downButton = new GameButton(Bitmap.createScaledBitmap(
+                downButton, newWidth, buttonWidth * newWidth / buttonHeight, false));
+
+        Bitmap leftButton = BitmapFactory.decodeResource(context.getResources(),
+                R.drawable.left_arrow);
+        buttonWidth = leftButton.getWidth();
+        buttonHeight = leftButton.getHeight();
+        this.leftButton = new GameButton(Bitmap.createScaledBitmap(
+                leftButton, newWidth, buttonWidth * newWidth / buttonHeight, false));
         this.tileset = R.drawable.tile1;
         setFocusable(true);
     }
@@ -73,24 +94,26 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
 
-        switch(event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                // detect when the nextButton is clicked
-                if (isButtonClicked(nextButton, event)) {
-                    tileNumber = (tileNumber + 1) % 3;
-                    if (tileNumber == 0) {
-                        this.tileset = R.drawable.tile1;
-                    } else if (tileNumber == 1) {
-                        this.tileset = R.drawable.tile2;
-                    } else {
-                        this.tileset = R.drawable.tile3;
-                    }
-                }
-                // detect when the endButton is clicked
-                if (isButtonClicked(endButton, event)) {
-                    goToEndScreen();
-                }
-
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            // map keypad functionality
+            if (isButtonClicked(upButton, event)) {
+                direction = Direction.UP;
+                return true;
+            }
+            if (isButtonClicked(downButton, event)) {
+                direction = Direction.DOWN;
+                return true;
+            }
+            if (isButtonClicked(leftButton, event)) {
+                direction = Direction.LEFT;
+                return true;
+            }
+            if (isButtonClicked(rightButton, event)) {
+                direction = Direction.RIGHT;
+                return true;
+            }
+        } else if (event.getAction() == MotionEvent.ACTION_UP) {
+            direction = Direction.NO_DIRECTION;
         }
 
         return super.onTouchEvent(event);
@@ -99,6 +122,8 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         gameLoop.startLoop();
+        playerViewModel.positionPlayer((float) getWidth() / 2,
+                (float) getHeight() / 2);
 
     }
 
@@ -117,31 +142,8 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         super.draw(canvas);
         drawBackground(canvas);
         drawScore(canvas);
-        playerViewModel.positionPlayer((float) getWidth() / 2, (float) getHeight() / 2);
         playerViewModel.draw(this.context, canvas);
-        nextButton.draw(canvas, getWidth() - 100, (float) getHeight() / 2);
-        endButton.draw(canvas, getWidth() - 100, getHeight() - 100);
-    }
-
-    public void drawUPS(Canvas canvas) {
-        String averageUPS = Double.toString(gameLoop.getAverageUPS());
-        Paint paint = new Paint();
-        int color = ContextCompat.getColor(context, R.color.white);
-        Typeface customTypeface = ResourcesCompat.getFont(context, R.font.press_start_2p);
-        paint.setTypeface(customTypeface);
-        paint.setTextSize(100);
-        paint.setColor(color);
-        canvas.drawText("UPS: " + averageUPS, 100, 300, paint);
-    }
-
-    public void drawFPS(Canvas canvas) {
-        String averageFPS = Double.toString(gameLoop.getAverageFPS());
-        Paint paint = new Paint();
-        int color = ContextCompat.getColor(context, R.color.white);
-        paint.setTypeface(ResourcesCompat.getFont(context, R.font.press_start_2p));
-        paint.setTextSize(100);
-        paint.setColor(color);
-        canvas.drawText("FPS: " + averageFPS, 100, 500, paint);
+        drawKeyPad(canvas, getWidth() - 300, getHeight() - 300);
     }
 
     public void drawScore(Canvas canvas) {
@@ -166,11 +168,35 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         canvas.drawRect(0, 0,  getWidth(), getHeight(), paint);
     }
 
-
     public void update() {
         this.score = calculateScore();
+
+        // maintain a certain direction if the button remains pressed
+        maintainDirection(direction);
+
+        Bounds bounds = playerViewModel.checkBounds(getWidth() - 100,
+                getHeight() - 100);
+        if (bounds == Bounds.RIGHT_EDGE) {
+            if (tileNumber == 2) {
+                goToEndScreen(1);
+                return;
+            }
+            tileNumber = (tileNumber + 1) % 3;
+            playerViewModel.enterLeft();
+        } else if (bounds == Bounds.LEFT_EDGE) {
+            tileNumber = (tileNumber - 1) % 3;
+            playerViewModel.enterRight(getWidth() - 100);
+        }
+
+        if (tileNumber == 0) {
+            this.tileset = R.drawable.tile1;
+        } else if (tileNumber == 1) {
+            this.tileset = R.drawable.tile2;
+        } else {
+            this.tileset = R.drawable.tile3;
+        }
         if (this.score == 0) {
-            goToEndScreen();
+            goToEndScreen(0);
         }
     }
 
@@ -178,11 +204,12 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         return 100 - (int) gameLoop.getElapsedTime();
     }
 
-    public void goToEndScreen() {
+    public void goToEndScreen(int gameStatus) {
         gameLoop.stopLoop();
         Intent intent = new Intent(this.getContext(), EndScreenActivity.class);
         Attempt newAttempt = new Attempt(this.name, this.score, getCurrentTime());
         leaderboard.addAttempt(newAttempt);
+        intent.putExtra("status", gameStatus);
         context.startActivity(intent);
     }
 
@@ -206,8 +233,48 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         double bottomRightX = topLeftX + buttonWidth;
         double bottomRightY = topLeftY + buttonHeight;
 
-        return (event.getX() > topLeftX && event.getX() < bottomRightX) &&
-                (event.getY() > topLeftY && event.getY() < bottomRightY);
+        return (event.getX() > topLeftX && event.getX() < bottomRightX)
+                && (event.getY() > topLeftY && event.getY() < bottomRightY);
+    }
+
+    public void drawKeyPad(Canvas canvas, float x, float y) {
+        upButton.draw(canvas, x, y - 150);
+        downButton.draw(canvas, x, y + 150);
+        rightButton.draw(canvas, x + 150, y);
+        leftButton.draw(canvas, x - 150, y);
+    }
+
+    public void maintainDirection(Direction direction) {
+        if (direction == Direction.UP) {
+            playerViewModel.moveUp();
+        } else if (direction == Direction.DOWN) {
+            playerViewModel.moveDown();
+        } else if (direction == Direction.LEFT) {
+            playerViewModel.moveLeft();
+        } else if (direction == Direction.RIGHT) {
+            playerViewModel.moveRight();
+        }
+    }
+
+    public void drawUPS(Canvas canvas) {
+        String averageUPS = Double.toString(gameLoop.getAverageUPS());
+        Paint paint = new Paint();
+        int color = ContextCompat.getColor(context, R.color.white);
+        Typeface customTypeface = ResourcesCompat.getFont(context, R.font.press_start_2p);
+        paint.setTypeface(customTypeface);
+        paint.setTextSize(100);
+        paint.setColor(color);
+        canvas.drawText("UPS: " + averageUPS, 100, 300, paint);
+    }
+
+    public void drawFPS(Canvas canvas) {
+        String averageFPS = Double.toString(gameLoop.getAverageFPS());
+        Paint paint = new Paint();
+        int color = ContextCompat.getColor(context, R.color.white);
+        paint.setTypeface(ResourcesCompat.getFont(context, R.font.press_start_2p));
+        paint.setTextSize(100);
+        paint.setColor(color);
+        canvas.drawText("FPS: " + averageFPS, 100, 500, paint);
     }
 
 }

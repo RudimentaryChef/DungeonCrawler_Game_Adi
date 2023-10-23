@@ -34,6 +34,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/statusContent"
+        android:layout_width="301dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="352dp"
+        android:fontFamily="@font/press_start_2p"
+        android:textAlignment="center"
+        android:textColor="#FBFBFB"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <Button
         android:id="@+id/restartBtn"
         android:layout_width="155dp"
@@ -48,8 +61,8 @@
 
     <EditText
         android:id="@+id/leaderboardContent"
-        android:layout_width="313dp"
-        android:layout_height="220dp"
+        android:layout_width="312dp"
+        android:layout_height="153dp"
         android:layout_marginStart="48dp"
         android:layout_marginTop="148dp"
         android:ems="10"
@@ -70,7 +83,7 @@
         android:layout_marginTop="112dp"
         android:fontFamily="@font/press_start_2p"
         android:text="Name  Score   Time"
-        android:textAlignment="center"
+        android:gravity="top|start"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
