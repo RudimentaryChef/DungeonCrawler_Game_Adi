@@ -2,7 +2,6 @@ package com.example.cs2340c_team41.models;
 
 import android.graphics.Canvas;
 import android.view.SurfaceHolder;
-import java.lang.Math;
 
 public class GameLoop extends Thread {
     private static final double MAX_UPS = 30.0;
