@@ -11,7 +11,7 @@ import com.example.cs2340c_team41.viewmodels.PlayerViewModel;
 
 import static org.junit.Assert.assertEquals;
 
-public class unitTests {
+public class UnitTests {
 
     private Leaderboard leaderboard;
     private Attempt attempt1;
@@ -56,9 +56,9 @@ public class unitTests {
         leaderboard.addAttempt(attempt2);
         leaderboard.addAttempt(attempt3);
 
-        String expectedLeaderboard = "Player2   200   5:30PM\n" +
-                "Player3   150   4:45PM\n" +
-                "Player1   100   4:55PM\n";
+        String expectedLeaderboard = "Player2   200   5:30PM\n"
+                + "Player3   150   4:45PM\n"
+                + "Player1   100   4:55PM\n";
 
         assertEquals(expectedLeaderboard, leaderboard.getLeaderboard());
     }
