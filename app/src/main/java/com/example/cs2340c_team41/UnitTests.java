@@ -134,40 +134,40 @@ public class UnitTests {
     public void testPositionPlayer() {
         // Test the positionPlayer method
         playerViewModel.positionPlayer(50.0, 60.0);
-        assertEquals(50.0, playerViewModel.getPlayer().getX(), 0.0);
-        assertEquals(60.0, playerViewModel.getPlayer().getY(), 0.0);
+        assertEquals(50.0, playerViewModel.getX(), 0.0);
+        assertEquals(60.0, playerViewModel.getY(), 0.0);
     }
 
     @Test
     public void testMoveUp() {
         // Test the moveUp method
-        double initialY = playerViewModel.getPlayer().getY();
+        double initialY = playerViewModel.getY();
         playerViewModel.moveUp();
-        assertEquals(initialY - 10, playerViewModel.getPlayer().getY(), 0.0);
+        assertEquals(initialY - 10, playerViewModel.getY(), 0.0);
     }
 
     @Test
     public void testMoveDown() {
         // Test the moveDown method
-        double initialY = playerViewModel.getPlayer().getY();
+        double initialY = playerViewModel.getY();
         playerViewModel.moveDown();
-        assertEquals(initialY + 10, playerViewModel.getPlayer().getY(), 0.0);
+        assertEquals(initialY + 10, playerViewModel.getY(), 0.0);
     }
 
     @Test
     public void testMoveRight() {
         // Test the moveRight method
-        double initialX = playerViewModel.getPlayer().getX();
+        double initialX = playerViewModel.getX();
         playerViewModel.moveRight();
-        assertEquals(initialX + 10, playerViewModel.getPlayer().getX(), 0.0);
+        assertEquals(initialX + 10, playerViewModel.getX(), 0.0);
     }
 
     @Test
     public void testMoveLeft() {
         // Test the moveLeft method
-        double initialX = playerViewModel.getPlayer().getX();
+        double initialX = playerViewModel.getX();
         playerViewModel.moveLeft();
-        assertEquals(initialX - 10, playerViewModel.getPlayer().getX(), 0.0);
+        assertEquals(initialX - 10, playerViewModel.getX(), 0.0);
     }
 
     @Test
@@ -187,13 +187,13 @@ public class UnitTests {
         // Test the enterRight method
         double newX = 1200.0;
         playerViewModel.enterRight((float) newX);
-        assertEquals(newX, playerViewModel.getPlayer().getX(), 0.0);
+        assertEquals(newX, playerViewModel.getX(), 0.0);
     }
 
     @Test
     public void testEnterLeft() {
         // Test the enterLeft method
         playerViewModel.enterLeft();
-        assertEquals(100.0, playerViewModel.getPlayer().getX(), 0.0);
+        assertEquals(100.0, playerViewModel.getX(), 0.0);
     }
 }

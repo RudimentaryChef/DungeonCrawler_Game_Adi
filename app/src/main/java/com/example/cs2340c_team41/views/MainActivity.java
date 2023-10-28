@@ -16,19 +16,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Button closeApplicationBtn = findViewById(R.id.exit);
         Button startApplicationBtn = findViewById(R.id.start);
-        closeApplicationBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-                System.exit(0);
-            }
+        closeApplicationBtn.setOnClickListener(v -> {
+            finish();
+            System.exit(0);
         });
-        startApplicationBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goToConfigScreen();
-            }
-        });
+        startApplicationBtn.setOnClickListener(v -> goToConfigScreen());
     }
     public void goToConfigScreen() {
         Intent intent = new Intent(getApplicationContext(), InitialConfigActivity.class);

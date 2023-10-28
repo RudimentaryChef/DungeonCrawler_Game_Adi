@@ -38,6 +38,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     private String name;
     private int score;
     private Leaderboard leaderboard;
+    private EnemyFactory factory;
     public Game(Context context, String sprite, String name, int hp) {
         super(context);
 
@@ -124,6 +125,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         gameLoop.startLoop();
         playerViewModel.positionPlayer((float) getWidth() / 2,
                 (float) getHeight() / 2);
+        factory = new EnemyFactory(getWidth(), getHeight());
 
     }
 
@@ -143,6 +145,15 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         drawBackground(canvas);
         drawScore(canvas);
         playerViewModel.draw(this.context, canvas);
+        Enemy enemy1 = factory.getEnemy("BRICK");
+        enemy1.draw(this.context, canvas);
+        Enemy enemy2 = factory.getEnemy("SWORD");
+        enemy2.draw(this.context, canvas);
+        Enemy enemy3 = factory.getEnemy("SAND");
+        enemy3.draw(this.context, canvas);
+        Enemy enemy4 = factory.getEnemy("TREE");
+        enemy4.draw(this.context, canvas);
+
         drawKeyPad(canvas, getWidth() - 300, getHeight() - 300);
     }
 
@@ -183,7 +194,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
             }
             tileNumber = (tileNumber + 1) % 3;
             playerViewModel.enterLeft();
-        } else if (bounds == Bounds.LEFT_EDGE) {
+        } else if (bounds == Bounds.LEFT_EDGE && tileNumber != 0) {
             tileNumber = (tileNumber - 1) % 3;
             playerViewModel.enterRight(getWidth() - 100);
         }

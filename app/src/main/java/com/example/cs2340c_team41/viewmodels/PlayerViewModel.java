@@ -83,7 +83,6 @@ public class PlayerViewModel extends ViewModel {
         return Bounds.INSIDE;
     }
 
-
     public void enterLeft() {
         player.setXLoc(100);
     }
@@ -92,8 +91,12 @@ public class PlayerViewModel extends ViewModel {
         player.setXLoc(x);
     }
 
-    public Player getPlayer() {
-        return player;
+    public double getX() {
+        return player.getX();
+    }
+
+    public double getY() {
+        return player.getY();
     }
 
 
