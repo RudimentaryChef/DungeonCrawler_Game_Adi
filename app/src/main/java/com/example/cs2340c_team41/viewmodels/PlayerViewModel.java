@@ -49,6 +49,12 @@ public class PlayerViewModel extends ViewModel {
         this.player.setYLoc(yPosition);
     }
 
+    public void pushBackLeft() {
+        for (int i = 0; i < 15; i++) {
+            moveLeft();
+        }
+    }
+
     public void moveUp() {
         player.setYLoc(player.getY() - 10);
     }
@@ -97,6 +103,10 @@ public class PlayerViewModel extends ViewModel {
 
     public double getY() {
         return player.getY();
+    }
+
+    public Integer getSprite() {
+        return player.getPlayerSprite();
     }
 
 

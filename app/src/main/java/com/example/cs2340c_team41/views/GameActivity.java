@@ -22,12 +22,15 @@ public class GameActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String difficulty = intent.getStringExtra("difficulty");
         int hp = 100;
+        int intDifficulty = 1;
         if (difficulty.equals("Easy")) {
             hp = 200;
+            intDifficulty = 2;
         } else if (difficulty.equals("Hard")) {
             hp = 50;
+            intDifficulty = 3;
         }
         setContentView(new Game(this, intent.getStringExtra("sprite"),
-                intent.getStringExtra("name"), hp));
+                intent.getStringExtra("name"), hp, intDifficulty));
     }
 }

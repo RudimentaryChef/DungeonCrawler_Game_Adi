@@ -15,13 +15,8 @@ public class BrickEnemy extends Enemy {
     private double x;
     private double y;
 
-    public BrickEnemy(double x, double y) {
-        super(R.drawable.enemy_3, 7, x, y);
-    }
-
-    @Override
-    public void attack() {
-        // BrickEnemy attack logic
+    public BrickEnemy(double x, double y, double endingY, int damage) {
+        super(R.drawable.enemy_3, 7, x, y, endingY, damage, 1.3);
     }
 
 

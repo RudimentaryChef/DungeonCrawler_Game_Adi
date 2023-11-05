@@ -25,14 +25,15 @@ public class Leaderboard {
     }
 
     public void addAttempt(Attempt newAttempt) {
-        this.latestAttempt = newAttempt;
-        topAttempts.add(newAttempt);
-        Collections.sort(topAttempts, Collections.reverseOrder());
-        // Sort in descending order based on score
-
-        // Keep only the top 5 attempts
-        if (topAttempts.size() > 5) {
-            topAttempts.subList(5, topAttempts.size()).clear();
+        if (!topAttempts.contains(newAttempt)) {
+            this.latestAttempt = newAttempt;
+            topAttempts.add(newAttempt);
+            Collections.sort(topAttempts, Collections.reverseOrder());
+            // Sort in descending order based on score
+            // Keep only the top 5 attempts
+            if (topAttempts.size() > 5) {
+                topAttempts.subList(5, topAttempts.size()).clear();
+            }
         }
     }
 

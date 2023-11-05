@@ -14,13 +14,8 @@ public class SandEnemy extends Enemy {
     private double x;
     private double y;
 
-    public SandEnemy(double x, double y) {
-        super(R.drawable.enemy_4, 5, x, y);
-    }
-
-    @Override
-    public void attack() {
-        // BrickEnemy attack logic
+    public SandEnemy(double x, double y, double endingY, int damage) {
+        super(R.drawable.enemy_4, 5, x, y, endingY, damage, 1.6);
     }
 
 

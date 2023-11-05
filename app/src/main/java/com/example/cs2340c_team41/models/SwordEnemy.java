@@ -15,13 +15,8 @@ public class SwordEnemy extends Enemy {
     private double x;
     private double y;
 
-    public SwordEnemy(double x, double y) {
-        super(R.drawable.enemy_2, 10, x, y);
-    }
-
-    @Override
-    public void attack() {
-        // BrickEnemy attack logic
+    public SwordEnemy(double x, double y, double endingY, int damage) {
+        super(R.drawable.enemy_2, 10, x, y, endingY, damage, 1.2);
     }
 
     // Getters

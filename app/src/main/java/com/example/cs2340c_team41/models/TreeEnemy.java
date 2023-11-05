@@ -15,13 +15,8 @@ public class TreeEnemy extends Enemy {
     private double x;
     private double y;
 
-    public TreeEnemy(double x, double y) {
-        super(R.drawable.enemy_1, 3, x, y);
-    }
-
-    @Override
-    public void attack() {
-        // BrickEnemy attack logic
+    public TreeEnemy(double x, double y, double endingY, int damage) {
+        super(R.drawable.enemy_1, 3, x, y, endingY, damage, 1.1);
     }
 
 
