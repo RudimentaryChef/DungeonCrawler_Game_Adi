@@ -1,5 +1,7 @@
 package com.example.cs2340c_team41.models;
 
+import java.util.Objects;
+
 public class Attempt implements Comparable<Attempt> {
     private String name;
     private int score;
@@ -31,5 +33,13 @@ public class Attempt implements Comparable<Attempt> {
         } else {
             return 1;
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Attempt attempt = (Attempt) o;
+        return Objects.equals(time, attempt.time); // Only compare time for equality
     }
 }
