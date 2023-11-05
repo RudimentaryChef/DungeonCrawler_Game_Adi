@@ -3,11 +3,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.content.Context;
-import java.util.Random;
-
-import com.example.cs2340c_team41.R;
-
-import java.util.Random;
 
 public class Enemy {
     private Integer sprite;
@@ -20,7 +15,8 @@ public class Enemy {
     private double y;
     private Direction direction;
 
-    public Enemy(Integer sprite, int speed, double x, double y, double endingY, int damage, double damageMultiplier) {
+    public Enemy(Integer sprite, int speed, double x, double y, double endingY, int damage,
+                 double damageMultiplier) {
         this.sprite = sprite;
         this.speed = speed;
         this.x = x;
@@ -38,8 +34,7 @@ public class Enemy {
         Bitmap playerSprite = BitmapFactory.decodeResource(context.getResources(),
                 sprite);
         if ((playerX + 50 >= x - 50
-                && playerX - 50 <= x + 50)
-        && (playerY + 50 >= y - 50
+                && playerX - 50 <= x + 50)  && (playerY + 50 >= y - 50
                 && playerY - 50 <= y + 50)) {
             return true;
         }

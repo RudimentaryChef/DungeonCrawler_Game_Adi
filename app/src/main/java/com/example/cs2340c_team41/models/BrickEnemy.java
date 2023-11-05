@@ -1,13 +1,6 @@
 package com.example.cs2340c_team41.models;
 
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-
 import com.example.cs2340c_team41.R;
-
-import java.util.Random;
 
 public class BrickEnemy extends Enemy {
     private Integer sprite;

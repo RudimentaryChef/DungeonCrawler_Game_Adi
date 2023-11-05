@@ -39,8 +39,8 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     private int score;
     private Leaderboard leaderboard;
     private EnemyFactory factory;
-    int difficulty;
-    int hp;
+    private int difficulty;
+    private int hp;
     private Enemy enemy1;
     private Enemy enemy2;
     private Enemy enemy3;
@@ -232,25 +232,29 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         }
         boolean attacked;
         enemy1.move();
-        attacked = enemy1.notify(playerViewModel.getX(), playerViewModel.getY(), context, playerViewModel.getSprite());
+        attacked = enemy1.notify(playerViewModel.getX(), playerViewModel.getY(), context,
+                playerViewModel.getSprite());
         if (attacked) {
             hp -= enemy1.attack();
             playerViewModel.pushBackLeft();
         }
         enemy2.move();
-        attacked = enemy2.notify(playerViewModel.getX(), playerViewModel.getY(), context, playerViewModel.getSprite());
+        attacked = enemy2.notify(playerViewModel.getX(), playerViewModel.getY(), context,
+                playerViewModel.getSprite());
         if (attacked) {
             hp -= enemy2.attack();
             playerViewModel.pushBackLeft();
         }
         enemy3.move();
-        attacked = enemy3.notify(playerViewModel.getX(), playerViewModel.getY(), context, playerViewModel.getSprite());
+        attacked = enemy3.notify(playerViewModel.getX(), playerViewModel.getY(), context,
+                playerViewModel.getSprite());
         if (attacked) {
             hp -= enemy3.attack();
             playerViewModel.pushBackLeft();
         }
         enemy4.move();
-        attacked = enemy4.notify(playerViewModel.getX(), playerViewModel.getY(), context, playerViewModel.getSprite());
+        attacked = enemy4.notify(playerViewModel.getX(), playerViewModel.getY(), context,
+                playerViewModel.getSprite());
         if (attacked) {
             hp -= enemy4.attack();
             playerViewModel.pushBackLeft();

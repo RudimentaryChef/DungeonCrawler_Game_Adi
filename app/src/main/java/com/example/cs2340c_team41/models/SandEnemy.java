@@ -1,11 +1,5 @@
 package com.example.cs2340c_team41.models;
 
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import java.util.Random;
-
 import com.example.cs2340c_team41.R;
 
 public class SandEnemy extends Enemy {
