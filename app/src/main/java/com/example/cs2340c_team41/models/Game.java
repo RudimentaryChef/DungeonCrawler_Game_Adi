@@ -38,13 +38,22 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     private String name;
     private int score;
     private Leaderboard leaderboard;
-    public Game(Context context, String sprite, String name, int hp) {
+    private EnemyFactory factory;
+    private int difficulty;
+    private int hp;
+    private Enemy enemy1;
+    private Enemy enemy2;
+    private Enemy enemy3;
+    private Enemy enemy4;
+    public Game(Context context, String sprite, String name, int hp, int difficulty) {
         super(context);
 
         SurfaceHolder surfaceHolder = getHolder();
         surfaceHolder.addCallback(this);
 
         this.context = context;
+        this.difficulty = difficulty;
+        this.hp = hp;
         gameLoop = new GameLoop(this, surfaceHolder);
         this.name = name;
 
@@ -122,9 +131,13 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         gameLoop.startLoop();
-        playerViewModel.positionPlayer((float) getWidth() / 2,
+        playerViewModel.positionPlayer((float) 100,
                 (float) getHeight() / 2);
-
+        factory = new EnemyFactory(getWidth(), getHeight(), difficulty);
+        enemy1 = factory.getEnemy("BRICK");
+        enemy2 = factory.getEnemy("SWORD");
+        enemy3 = factory.getEnemy("SAND");
+        enemy4 = factory.getEnemy("TREE");
     }
 
     @Override
@@ -142,7 +155,12 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         super.draw(canvas);
         drawBackground(canvas);
         drawScore(canvas);
+        drawHP(canvas);
         playerViewModel.draw(this.context, canvas);
+        enemy1.draw(this.context, canvas);
+        enemy2.draw(this.context, canvas);
+        enemy3.draw(this.context, canvas);
+        enemy4.draw(this.context, canvas);
         drawKeyPad(canvas, getWidth() - 300, getHeight() - 300);
     }
 
@@ -155,8 +173,22 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         paint.setTextSize(100);
         paint.setColor(color);
         paint.setTextAlign(Paint.Align.CENTER);
-        int xPos = canvas.getWidth() / 2;
+        int xPos = 3 * canvas.getWidth() / 4;
         canvas.drawText("Score", xPos, 200, paint);
+        paint.setTextSize(70);
+        canvas.drawText(score, xPos, 300, paint);
+    }
+
+    public void drawHP(Canvas canvas) {
+        String score = Integer.toString(this.hp);
+        Paint paint = new Paint();
+        int color = ContextCompat.getColor(context, R.color.white);
+        paint.setTypeface(ResourcesCompat.getFont(context, R.font.press_start_2p));
+        paint.setTextSize(100);
+        paint.setColor(color);
+        paint.setTextAlign(Paint.Align.CENTER);
+        int xPos = canvas.getWidth() / 4;
+        canvas.drawText("HP", xPos, 200, paint);
         paint.setTextSize(70);
         canvas.drawText(score, xPos, 300, paint);
     }
@@ -183,7 +215,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
             }
             tileNumber = (tileNumber + 1) % 3;
             playerViewModel.enterLeft();
-        } else if (bounds == Bounds.LEFT_EDGE) {
+        } else if (bounds == Bounds.LEFT_EDGE && tileNumber != 0) {
             tileNumber = (tileNumber - 1) % 3;
             playerViewModel.enterRight(getWidth() - 100);
         }
@@ -195,8 +227,37 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         } else {
             this.tileset = R.drawable.tile3;
         }
-        if (this.score == 0) {
+        if (this.score <= 0 || this.hp <= 0) {
             goToEndScreen(0);
+        }
+        boolean attacked;
+        enemy1.move();
+        attacked = enemy1.notify(playerViewModel.getX(), playerViewModel.getY(), context,
+                playerViewModel.getSprite());
+        if (attacked) {
+            hp -= enemy1.attack();
+            playerViewModel.pushBackLeft();
+        }
+        enemy2.move();
+        attacked = enemy2.notify(playerViewModel.getX(), playerViewModel.getY(), context,
+                playerViewModel.getSprite());
+        if (attacked) {
+            hp -= enemy2.attack();
+            playerViewModel.pushBackLeft();
+        }
+        enemy3.move();
+        attacked = enemy3.notify(playerViewModel.getX(), playerViewModel.getY(), context,
+                playerViewModel.getSprite());
+        if (attacked) {
+            hp -= enemy3.attack();
+            playerViewModel.pushBackLeft();
+        }
+        enemy4.move();
+        attacked = enemy4.notify(playerViewModel.getX(), playerViewModel.getY(), context,
+                playerViewModel.getSprite());
+        if (attacked) {
+            hp -= enemy4.attack();
+            playerViewModel.pushBackLeft();
         }
     }
 
