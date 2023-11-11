@@ -1,6 +1,10 @@
 package com.example.cs2340c_team41.models;
 
+/**
+ * A class that represents constant bounds that the player can not cross
+ */
 public enum Bounds {
+    //
     INSIDE(0),
     LEFT_EDGE(1),
     RIGHT_EDGE(2);
