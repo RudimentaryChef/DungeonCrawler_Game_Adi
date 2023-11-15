@@ -19,7 +19,7 @@ public class Enemy {
     private double endingY;
     private double y;
     private Direction direction;
-
+    //Initializes an Enemy
     public Enemy(Integer sprite, int speed, double x, double y, double endingY, int damage,
                  double damageMultiplier) {
         this.sprite = sprite;
@@ -32,7 +32,7 @@ public class Enemy {
         this.y = y;
         direction = Direction.DOWN;
     }
-
+    //notifies if contact happens. Observer method.
     public boolean notify(double playerX, double playerY, Context context, Integer sprite) {
         Bitmap enemySprite = BitmapFactory.decodeResource(context.getResources(),
                 this.sprite);
@@ -49,7 +49,7 @@ public class Enemy {
     public double attack() {
         return damage * damageMultiplier;
     }
-
+    //draw's the sprite onto screen
     public void draw(Context context, Canvas canvas) {
         Bitmap sprite = BitmapFactory.decodeResource(context.getResources(),
                 this.sprite);
@@ -61,7 +61,7 @@ public class Enemy {
         canvas.drawBitmap(sprite, (float) x - (float) sprite.getWidth() / 2,
                 (float) y - (float) sprite.getHeight() / 2, null);
     }
-
+    //moves the sprite automatically and checks bounds
     public void move() {
         checkBounds();
         if (direction == Direction.DOWN) {
@@ -70,7 +70,7 @@ public class Enemy {
             y -= speed;
         }
     }
-
+    //checks bounds
     public void checkBounds() {
         if (y > endingY) {
             y -= speed;
