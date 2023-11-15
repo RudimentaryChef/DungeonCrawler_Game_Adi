@@ -3,7 +3,12 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.content.Context;
-
+/*
+*   This is the enemy superclass,
+*   Enemies have sprites, speed, damage, multipliers, and locaations (both starting and current)
+*   They also have a direction they move un
+*
+ */
 public class Enemy {
     private Integer sprite;
     private int speed;
