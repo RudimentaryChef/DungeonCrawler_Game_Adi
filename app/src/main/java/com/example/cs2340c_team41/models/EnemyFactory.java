@@ -1,7 +1,9 @@
 package com.example.cs2340c_team41.models;
 
 import java.util.Random;
-
+/*
+* Enemy factory class
+ */
 public class EnemyFactory {
     private Random random;
 
